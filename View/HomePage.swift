@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct HomePage: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @ObservedObject var viewModel: AppViewModel
 
     var body: some View {
         NavigationStack {
@@ -268,5 +268,5 @@ struct HomePage: View {
 }
 
 #Preview {
-    HomePage(viewModel: HomeViewModel(matches: SampleData.matches, tips: SampleData.tips))
+    HomePage(viewModel: AppViewModel())
 }

@@ -1,18 +1,37 @@
 //
 //  TipsViewModel.swift
 //
-//  Use this view model for the Tips page.
-//  Put tip selection state, round progress, and save/update tip actions here.
+//  Tips page actions on AppViewModel.
 
-import Combine
 import Foundation
 
-final class TipsViewModel: ObservableObject {
-    @Published var matches: [Match]
-    @Published var tips: [Tip]
+extension AppViewModel {
+    var allTipsLocked: Bool {
+        tips.allSatisfy { $0.isLocked || ($0.match.homeScore != nil) }
+    }
 
-    init(matches: [Match] = [], tips: [Tip] = []) {
-        self.matches = matches
-        self.tips = tips
+    func selectTeam(_ team: Team, for match: Match) {
+        guard let index = tips.firstIndex(where: { $0.match.id == match.id }) else { return }
+        guard !tips[index].isLocked else { return }
+        guard match.homeScore == nil else { return }
+        tips[index].selectedTeam = team
+    }
+
+    func lockTip(for match: Match) {
+        guard let index = tips.firstIndex(where: { $0.match.id == match.id }) else { return }
+        guard tips[index].selectedTeam != nil, !tips[index].isLocked else { return }
+        tips[index].isLocked = true
+    }
+
+    func unlockTip(for match: Match) {
+        guard let index = tips.firstIndex(where: { $0.match.id == match.id }) else { return }
+        guard match.homeScore == nil else { return }
+        tips[index].isLocked = false
+    }
+
+    func lockAllTips() {
+        for i in tips.indices where tips[i].selectedTeam != nil && !tips[i].isLocked {
+            tips[i].isLocked = true
+        }
     }
 }

@@ -9,8 +9,8 @@ import Foundation
 struct Tip: Identifiable, Hashable {
     let id: UUID
     let match: Match
-    let selectedTeam: Team?
-    let isLocked: Bool
+    var selectedTeam: Team?
+    var isLocked: Bool
 
     init(id: UUID = UUID(), match: Match, selectedTeam: Team? = nil, isLocked: Bool = false) {
         self.id = id

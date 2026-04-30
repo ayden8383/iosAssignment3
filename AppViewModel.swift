@@ -1,31 +1,37 @@
 //
 //  AppViewModel.swift
-//  
 //
 //  Created by DCS on 29/4/2026.
 //
-//  Use this file for shared app-level state.
-//  This is where the main app view models are created and passed into the pages.
-//  Keep screen-specific logic inside the individual view model files.
+//  Single source of truth for shared app state.
+//  Matches and tips live here so all pages stay in sync.
 
-import Combine
 import Foundation
 
 final class AppViewModel: ObservableObject {
     @Published var selectedTab: AppTab = .home
+    @Published var matches: [Match]
+    @Published var tips: [Tip]
 
-    let homeViewModel: HomeViewModel
-    let tipsViewModel: TipsViewModel
     let statsViewModel: StatsViewModel
     let scoreboardViewModel: ScoreboardViewModel
 
     init() {
-        let matches = SampleData.matches
-        let tips = SampleData.tips
-
-        self.homeViewModel = HomeViewModel(matches: matches, tips: tips)
-        self.tipsViewModel = TipsViewModel(matches: matches, tips: tips)
+        self.matches = SampleData.matches
+        self.tips = SampleData.tips
         self.statsViewModel = StatsViewModel(stats: SampleData.matchStats)
         self.scoreboardViewModel = ScoreboardViewModel(entries: SampleData.scoreboard)
+    }
+
+    var currentRound: Int {
+        matches.first?.round ?? 1
+    }
+
+    var tipsPlaced: Int {
+        tips.filter { $0.selectedTeam != nil }.count
+    }
+
+    func tip(for match: Match) -> Tip? {
+        tips.first { $0.match.id == match.id }
     }
 }
