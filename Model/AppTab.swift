@@ -26,4 +26,17 @@ enum AppTab: String, CaseIterable, Identifiable {
             return "Scoreboard"
         }
     }
+
+    var iconName: String {
+        switch self {
+        case .home:
+            return "house.fill"
+        case .tips:
+            return "hand.point.up.fill"
+        case .stats:
+            return "chart.bar.fill"
+        case .scoreboard:
+            return "trophy.fill"
+        }
+    }
 }
