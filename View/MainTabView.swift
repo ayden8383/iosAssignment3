@@ -1,9 +1,7 @@
 //
 //  MainTabView.swift
 //
-//  Use this file for the root SwiftUI navigation.
-//  This view connects the four main app pages to the shared AppViewModel.
-//  Keep detailed page UI inside each individual page file.
+//  Root navigation connecting the four main pages to the shared AppViewModel.
 
 import SwiftUI
 
@@ -12,20 +10,28 @@ struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $appViewModel.selectedTab) {
-            HomePage(viewModel: appViewModel.homeViewModel)
-                .tabItem { Text(AppTab.home.title) }
+            HomePage(viewModel: appViewModel)
+                .tabItem {
+                    Label(AppTab.home.title, systemImage: AppTab.home.iconName)
+                }
                 .tag(AppTab.home)
 
-            TipsPage(viewModel: appViewModel.tipsViewModel)
-                .tabItem { Text(AppTab.tips.title) }
+            TipsPage(viewModel: appViewModel)
+                .tabItem {
+                    Label(AppTab.tips.title, systemImage: AppTab.tips.iconName)
+                }
                 .tag(AppTab.tips)
 
             StatsPage(viewModel: appViewModel.statsViewModel)
-                .tabItem { Text(AppTab.stats.title) }
+                .tabItem {
+                    Label(AppTab.stats.title, systemImage: AppTab.stats.iconName)
+                }
                 .tag(AppTab.stats)
 
             ScoreboardPage(viewModel: appViewModel.scoreboardViewModel)
-                .tabItem { Text(AppTab.scoreboard.title) }
+                .tabItem {
+                    Label(AppTab.scoreboard.title, systemImage: AppTab.scoreboard.iconName)
+                }
                 .tag(AppTab.scoreboard)
         }
     }

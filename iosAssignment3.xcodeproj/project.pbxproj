@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		8A0000010000000000000001 /* iosAssignment3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000101 /* iosAssignment3App.swift */; };
 		8A0000010000000000000002 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000102 /* AppViewModel.swift */; };
-		8A0000010000000000000003 /* interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000103 /* interface.swift */; };
-		8A0000010000000000000004 /* alitesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000104 /* alitesting.swift */; };
-		8A0000010000000000000005 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000105 /* test.swift */; };
 		8A0000010000000000000006 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000106 /* AppTab.swift */; };
 		8A0000010000000000000007 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000107 /* Match.swift */; };
 		8A0000010000000000000008 /* MatchStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000108 /* MatchStats.swift */; };
@@ -33,9 +30,6 @@
 /* Begin PBXFileReference section */
 		8A0000010000000000000101 /* iosAssignment3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAssignment3App.swift; sourceTree = "<group>"; };
 		8A0000010000000000000102 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
-		8A0000010000000000000103 /* interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interface.swift; sourceTree = "<group>"; };
-		8A0000010000000000000104 /* alitesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alitesting.swift; sourceTree = "<group>"; };
-		8A0000010000000000000105 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		8A0000010000000000000106 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		8A0000010000000000000107 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		8A0000010000000000000108 /* MatchStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStats.swift; sourceTree = "<group>"; };
@@ -74,9 +68,6 @@
 				8A0000010000000000000402 /* Model */,
 				8A0000010000000000000403 /* ModelView */,
 				8A0000010000000000000404 /* View */,
-				8A0000010000000000000103 /* interface.swift */,
-				8A0000010000000000000104 /* alitesting.swift */,
-				8A0000010000000000000105 /* test.swift */,
 				8A0000010000000000000405 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -196,9 +187,6 @@
 			files = (
 				8A0000010000000000000001 /* iosAssignment3App.swift in Sources */,
 				8A0000010000000000000002 /* AppViewModel.swift in Sources */,
-				8A0000010000000000000003 /* interface.swift in Sources */,
-				8A0000010000000000000004 /* alitesting.swift in Sources */,
-				8A0000010000000000000005 /* test.swift in Sources */,
 				8A0000010000000000000006 /* AppTab.swift in Sources */,
 				8A0000010000000000000007 /* Match.swift in Sources */,
 				8A0000010000000000000008 /* MatchStats.swift in Sources */,
