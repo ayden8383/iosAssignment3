@@ -46,7 +46,8 @@ enum SampleData {
     ]
 
     static let scoreboard: [ScoreboardEntry] = [
-        ScoreboardEntry(rank: 1, name: "Chris", tipsCorrect: 52, totalTips: 56),
-        ScoreboardEntry(rank: 2, name: "Alex", tipsCorrect: 50, totalTips: 54)
+        ScoreboardEntry(rank: 1, name: "Chris", correctTips: 52, totalTips: 56),
+        ScoreboardEntry(rank: 2, name: "Alex", correctTips: 50, totalTips: 56),
+        ScoreboardEntry(rank: 2, name: "Bob", correctTips: 46, totalTips: 56)
     ]
 }

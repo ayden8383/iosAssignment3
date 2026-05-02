@@ -6,18 +6,21 @@
 
 import Foundation
 
+import Foundation
+
 struct ScoreboardEntry: Identifiable, Hashable {
-    let id: UUID
+    let id = UUID()
     let rank: Int
     let name: String
-    let tipsCorrect: Int
+    let correctTips: Int
     let totalTips: Int
 
-    init(id: UUID = UUID(), rank: Int, name: String, tipsCorrect: Int, totalTips: Int) {
-        self.id = id
-        self.rank = rank
-        self.name = name
-        self.tipsCorrect = tipsCorrect
-        self.totalTips = totalTips
+    var percentage: Double {
+        if totalTips == 0 {
+            return 0
+        }
+        return Double(correctTips) / Double(totalTips)
     }
+    
+    
 }
