@@ -1,10 +1,16 @@
+
 //
 //  AppViewModel.swift
+
 //
 //  Created by DCS on 29/4/2026.
 //
 //  Single source of truth for shared app state.
 //  Matches and tips live here so all pages stay in sync.
+
+
+
+import Combine
 
 import Foundation
 
@@ -13,12 +19,17 @@ final class AppViewModel: ObservableObject {
     @Published var matches: [Match]
     @Published var tips: [Tip]
 
+
+
     let statsViewModel: StatsViewModel
     let scoreboardViewModel: ScoreboardViewModel
 
     init() {
         self.matches = SampleData.matches
         self.tips = SampleData.tips
+
+
+
         self.statsViewModel = StatsViewModel(stats: SampleData.matchStats)
         self.scoreboardViewModel = ScoreboardViewModel(entries: SampleData.scoreboard)
     }
@@ -35,3 +46,6 @@ final class AppViewModel: ObservableObject {
         tips.first { $0.match.id == match.id }
     }
 }
+
+
+
