@@ -138,6 +138,7 @@ struct TipsPage: View {
     ) -> some View {
         Button(action: action) {
             VStack(spacing: 6) {
+                // Shows the team's badge above its abbreviation/name.
                 teamLogo(team)
                 Text(team.abbreviation)
                     .font(.system(.title2, design: .rounded).weight(.black))
@@ -171,6 +172,7 @@ struct TipsPage: View {
     @ViewBuilder
     private func teamLogo(_ team: Team) -> some View {
         if let logoURL = team.logoURL {
+            // AsyncImage downloads and displays the badge from the internet.
             AsyncImage(url: logoURL) { phase in
                 switch phase {
                 case .success(let image):
@@ -178,21 +180,26 @@ struct TipsPage: View {
                         .resizable()
                         .scaledToFit()
                 case .empty:
+                    // While the image is loading, show a simple backup badge.
                     logoPlaceholder(team.abbreviation)
                 case .failure:
+                    // If the image link fails, the app still shows the abbreviation.
                     logoPlaceholder(team.abbreviation)
                 @unknown default:
                     logoPlaceholder(team.abbreviation)
                 }
             }
+            // Fixed size stops the card layout from moving while the image loads.
             .frame(width: 48, height: 48)
         } else {
+            // Sample/fallback data has no logo URL, so it uses the backup badge.
             logoPlaceholder(team.abbreviation)
                 .frame(width: 48, height: 48)
         }
     }
 
     private func logoPlaceholder(_ abbreviation: String) -> some View {
+        // A plain local badge used when there is no image available.
         ZStack {
             Circle()
                 .fill(Color.green.opacity(0.12))

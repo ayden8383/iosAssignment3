@@ -38,6 +38,7 @@ final class AppViewModel: ObservableObject {
 
     @MainActor
     func loadNRLData() async {
+        // Only load once when the app opens. This avoids repeating the same API call.
         guard !hasLoadedNRLData else { return }
 
         hasLoadedNRLData = true
@@ -45,11 +46,13 @@ final class AppViewModel: ObservableObject {
         dataErrorMessage = nil
 
         do {
+            // Ask DataAPI for real NRL data, then replace the fallback sample data.
             let loadedData = try await DataAPI.fetchCurrentRoundData()
             matches = loadedData.matches
             tips = loadedData.tips
             statsViewModel.stats = loadedData.matchStats
         } catch {
+            // If the internet/API fails, keep using SampleData and save the error message.
             dataErrorMessage = error.localizedDescription
         }
 
@@ -68,5 +71,4 @@ final class AppViewModel: ObservableObject {
         tips.first { $0.match.id == match.id }
     }
 }
-
 
