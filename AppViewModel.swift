@@ -17,7 +17,10 @@ final class AppViewModel: ObservableObject {
     @Published var selectedTab: AppTab = .home
     @Published var matches: [Match]
     @Published var tips: [Tip]
+    @Published var isLoadingData = false
+    @Published var dataErrorMessage: String?
 
+    private var hasLoadedNRLData = false
 
 
     let statsViewModel: StatsViewModel
@@ -33,6 +36,26 @@ final class AppViewModel: ObservableObject {
         self.scoreboardViewModel = ScoreboardViewModel(entries: SampleData.scoreboard)
     }
 
+    @MainActor
+    func loadNRLData() async {
+        guard !hasLoadedNRLData else { return }
+
+        hasLoadedNRLData = true
+        isLoadingData = true
+        dataErrorMessage = nil
+
+        do {
+            let loadedData = try await DataAPI.fetchCurrentRoundData()
+            matches = loadedData.matches
+            tips = loadedData.tips
+            statsViewModel.stats = loadedData.matchStats
+        } catch {
+            dataErrorMessage = error.localizedDescription
+        }
+
+        isLoadingData = false
+    }
+
     var currentRound: Int {
         matches.first?.round ?? 1
     }
@@ -45,6 +68,5 @@ final class AppViewModel: ObservableObject {
         tips.first { $0.match.id == match.id }
     }
 }
-
 
 

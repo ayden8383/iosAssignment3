@@ -13,6 +13,7 @@
 		8A0000010000000000000007 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000107 /* Match.swift */; };
 		8A0000010000000000000008 /* MatchStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000108 /* MatchStats.swift */; };
 		8A0000010000000000000009 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000109 /* SampleData.swift */; };
+		8A0000010000000000000016 /* DataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0000010000000000000116 /* DataAPI.swift */; };
 		8A000001000000000000000A /* ScoreboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A000001000000000000010A /* ScoreboardEntry.swift */; };
 		8A000001000000000000000B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A000001000000000000010B /* Team.swift */; };
 		8A000001000000000000000C /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A000001000000000000010C /* Tip.swift */; };
@@ -34,6 +35,7 @@
 		8A0000010000000000000107 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		8A0000010000000000000108 /* MatchStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchStats.swift; sourceTree = "<group>"; };
 		8A0000010000000000000109 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		8A0000010000000000000116 /* DataAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAPI.swift; sourceTree = "<group>"; };
 		8A000001000000000000010A /* ScoreboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardEntry.swift; sourceTree = "<group>"; };
 		8A000001000000000000010B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		8A000001000000000000010C /* Tip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				8A0000010000000000000107 /* Match.swift */,
 				8A0000010000000000000108 /* MatchStats.swift */,
 				8A0000010000000000000109 /* SampleData.swift */,
+				8A0000010000000000000116 /* DataAPI.swift */,
 				8A000001000000000000010A /* ScoreboardEntry.swift */,
 				8A000001000000000000010B /* Team.swift */,
 				8A000001000000000000010C /* Tip.swift */,
@@ -191,6 +194,7 @@
 				8A0000010000000000000007 /* Match.swift in Sources */,
 				8A0000010000000000000008 /* MatchStats.swift in Sources */,
 				8A0000010000000000000009 /* SampleData.swift in Sources */,
+				8A0000010000000000000016 /* DataAPI.swift in Sources */,
 				8A000001000000000000000A /* ScoreboardEntry.swift in Sources */,
 				8A000001000000000000000B /* Team.swift in Sources */,
 				8A000001000000000000000C /* Tip.swift in Sources */,

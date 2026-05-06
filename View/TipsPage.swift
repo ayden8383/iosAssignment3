@@ -138,6 +138,7 @@ struct TipsPage: View {
     ) -> some View {
         Button(action: action) {
             VStack(spacing: 6) {
+                teamLogo(team)
                 Text(team.abbreviation)
                     .font(.system(.title2, design: .rounded).weight(.black))
                 Text(team.name)
@@ -165,6 +166,43 @@ struct TipsPage: View {
         .buttonStyle(.plain)
         .disabled(isDisabled)
         .opacity(isDisabled && !isSelected ? 0.5 : 1)
+    }
+
+    @ViewBuilder
+    private func teamLogo(_ team: Team) -> some View {
+        if let logoURL = team.logoURL {
+            AsyncImage(url: logoURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                case .empty:
+                    logoPlaceholder(team.abbreviation)
+                case .failure:
+                    logoPlaceholder(team.abbreviation)
+                @unknown default:
+                    logoPlaceholder(team.abbreviation)
+                }
+            }
+            .frame(width: 48, height: 48)
+        } else {
+            logoPlaceholder(team.abbreviation)
+                .frame(width: 48, height: 48)
+        }
+    }
+
+    private func logoPlaceholder(_ abbreviation: String) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color.green.opacity(0.12))
+            Text(abbreviation)
+                .font(.caption.weight(.black))
+                .foregroundStyle(.green)
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+                .padding(4)
+        }
     }
 
     // MARK: - Tip Action Buttons

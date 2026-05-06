@@ -34,6 +34,9 @@ struct MainTabView: View {
                 }
                 .tag(AppTab.scoreboard)
         }
+        .task {
+            await appViewModel.loadNRLData()
+        }
     }
 }
 

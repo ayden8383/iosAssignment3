@@ -1,8 +1,7 @@
 //
 //  SampleData.swift
 //
-//  Use this file for temporary MVP data while there is no database or API.
-//  Replace or remove this later when real app data is loaded from storage or a network service.
+//  Fallback and preview data used when NRL API data is unavailable.
 
 import Foundation
 
