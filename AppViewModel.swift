@@ -30,9 +30,7 @@ final class AppViewModel: ObservableObject {
         self.matches = SampleData.matches
         self.tips = SampleData.tips
 
-
-
-        self.statsViewModel = StatsViewModel(stats: SampleData.matchStats)
+        self.statsViewModel = StatsViewModel(matches: SampleData.matches)
         self.scoreboardViewModel = ScoreboardViewModel(entries: SampleData.scoreboard)
     }
 
@@ -50,7 +48,7 @@ final class AppViewModel: ObservableObject {
             let loadedData = try await DataAPI.fetchCurrentRoundData()
             matches = loadedData.matches
             tips = loadedData.tips
-            statsViewModel.stats = loadedData.matchStats
+            statsViewModel.matches = loadedData.matches
         } catch {
             // If the internet/API fails, keep using SampleData and save the error message.
             dataErrorMessage = error.localizedDescription

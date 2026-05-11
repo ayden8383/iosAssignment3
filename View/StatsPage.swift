@@ -1,9 +1,7 @@
 //
 //  StatsPage.swift
 //
-//  Use this file for the Stats screen UI.
-//  This page should eventually show match scores, at-a-glance stats, recent form, and team comparison.
-//  Keep stat data and calculations in StatsViewModel.
+//  Shows each match in the round with head-to-head records.
 
 import SwiftUI
 
@@ -13,136 +11,115 @@ struct StatsPage: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-
-                    Text("Stats")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-
-                    summarySection
-
-                    matchStatsSection
+                VStack(spacing: 16) {
+                    ForEach(viewModel.matches) { match in
+                        matchH2HCard(match)
+                    }
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom, 24)
             }
+            .background(Color(.systemGroupedBackground))
+            .navigationTitle("Stats")
         }
     }
 
-    private var summarySection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Summary")
-                .font(.headline)
+    private func matchH2HCard(_ match: Match) -> some View {
+        let h2h = viewModel.headToHead(for: match)
+        let isCompleted = match.homeScore != nil && match.awayScore != nil
 
-            HStack(spacing: 12) {
-                StatCard(
-                    title: "Stat Records",
-                    value: "\(viewModel.totalStatRecords)"
-                )
-
-                StatCard(
-                    title: "Completed Matches",
-                    value: "\(viewModel.completedMatches.count)"
-                )
-            }
-
-            HStack(spacing: 12) {
-                StatCard(
-                    title: "Avg Home Completion",
-                    value: "\(viewModel.averageHomeCompletionRate)%"
-                )
-
-                StatCard(
-                    title: "Avg Away Completion",
-                    value: "\(viewModel.averageAwayCompletionRate)%"
-                )
-            }
-        }
-    }
-
-    private var matchStatsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Match Stats")
-                .font(.headline)
-
-            if viewModel.stats.isEmpty {
-                Text("No stats available yet.")
-                    .foregroundStyle(.secondary)
-            } else {
-                ForEach(viewModel.stats) { stat in
-                    MatchStatRow(stat: stat)
+        return VStack(spacing: 12) {
+            HStack {
+                if isCompleted {
+                    Text("FULL TIME")
+                        .font(.caption2.weight(.heavy))
+                        .foregroundStyle(.secondary)
                 }
-            }
-        }
-    }
-}
-
-private struct StatCard: View {
-    let title: String
-    let value: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            Text(value)
-                .font(.title2)
-                .fontWeight(.bold)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-}
-
-private struct MatchStatRow: View {
-    let stat: MatchStats
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Round \(stat.match.round)")
-                .font(.system(size: 20, weight: .black, design: .rounded))
-                .foregroundStyle(.white)
-
-            Text("\(stat.match.homeTeam.name) vs \(stat.match.awayTeam.name)")
-                .font(.headline.weight(.medium))
-                .foregroundStyle(.white.opacity(0.8))
-
-            if let homeScore = stat.match.homeScore,
-               let awayScore = stat.match.awayScore {
-                Text("Score: \(homeScore) - \(awayScore)")
-                    .font(.headline.weight(.medium))
-                    .foregroundStyle(.white.opacity(0.8))
-            } else {
-                Text("Match not completed")
-                    .font(.headline.weight(.medium))
-                    .foregroundStyle(.white.opacity(0.8))
+                Spacer()
+                if let date = match.scheduledDate {
+                    Text(date, format: .dateTime.weekday(.abbreviated).day().month(.abbreviated).hour().minute())
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.secondary)
+                }
             }
 
             HStack {
-                Text("\(stat.match.homeTeam.abbreviation): \(stat.homeCompletionRate ?? 0)%")
+                Text("(\(h2h.homeWins))")
+                    .font(.system(.title3, design: .rounded).weight(.black))
+                    .foregroundStyle(.green)
+                    .frame(width: 36, alignment: .trailing)
+
+                Text(match.homeTeam.abbreviation)
+                    .font(.system(.body, design: .rounded).weight(.bold))
+                    .frame(width: 38, alignment: .leading)
+
+                Text(match.homeTeam.name)
+                    .font(.subheadline)
+                    .lineLimit(1)
+
                 Spacer()
-                Text("\(stat.match.awayTeam.abbreviation): \(stat.awayCompletionRate ?? 0)%")
+
+                if let score = match.homeScore {
+                    Text("\(score)")
+                        .font(.system(.title2, design: .rounded).weight(.bold))
+                }
             }
-            .font(.headline.weight(.medium))
-            .foregroundStyle(.white.opacity(0.8))
+
+            HStack {
+                Spacer()
+                Text("vs")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.tertiary)
+                Spacer()
+            }
+
+            HStack {
+                Text("(\(h2h.awayWins))")
+                    .font(.system(.title3, design: .rounded).weight(.black))
+                    .foregroundStyle(.green)
+                    .frame(width: 36, alignment: .trailing)
+
+                Text(match.awayTeam.abbreviation)
+                    .font(.system(.body, design: .rounded).weight(.bold))
+                    .frame(width: 38, alignment: .leading)
+
+                Text(match.awayTeam.name)
+                    .font(.subheadline)
+                    .lineLimit(1)
+
+                Spacer()
+
+                if let score = match.awayScore {
+                    Text("\(score)")
+                        .font(.system(.title2, design: .rounded).weight(.bold))
+                }
+            }
+
+            Divider()
+
+            HStack {
+                Image(systemName: "arrow.left.and.right")
+                    .font(.caption2)
+                    .foregroundStyle(.green)
+                Text(viewModel.headToHeadSummary(for: match))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                Spacer()
+
+                if isCompleted {
+                    let margin = abs((match.homeScore ?? 0) - (match.awayScore ?? 0))
+                    let winner = (match.homeScore ?? 0) > (match.awayScore ?? 0) ? match.homeTeam : match.awayTeam
+                    Text("\(winner.abbreviation) by \(margin)")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.primary)
+                }
+            }
         }
         .padding()
-        .background(
-            LinearGradient(
-                colors: [Color(red: 0.06, green: 0.30, blue: 0.18),
-                         Color(red: 0.10, green: 0.52, blue: 0.30)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: .black.opacity(0.15), radius: 8, y: 4)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 }
 
 #Preview {
-    StatsPage(viewModel: StatsViewModel(stats: SampleData.matchStats))
+    StatsPage(viewModel: StatsViewModel(matches: SampleData.matches))
 }
