@@ -125,22 +125,14 @@ struct HomePage: View {
             }
             .padding(.bottom, 10)
 
-            teamScoreRow(
-                abbreviation: match.homeTeam.abbreviation,
-                name: match.homeTeam.name,
-                score: match.homeScore ?? 0,
-                isWinner: (match.homeScore ?? 0) > (match.awayScore ?? 0)
-            )
+            teamScoreRow(team: match.homeTeam, score: match.homeScore ?? 0,
+                         isWinner: (match.homeScore ?? 0) > (match.awayScore ?? 0))
 
             Divider()
                 .padding(.vertical, 6)
 
-            teamScoreRow(
-                abbreviation: match.awayTeam.abbreviation,
-                name: match.awayTeam.name,
-                score: match.awayScore ?? 0,
-                isWinner: (match.awayScore ?? 0) > (match.homeScore ?? 0)
-            )
+            teamScoreRow(team: match.awayTeam, score: match.awayScore ?? 0,
+                         isWinner: (match.awayScore ?? 0) > (match.homeScore ?? 0))
 
             if let tip = viewModel.tip(for: match), let selected = tip.selectedTeam {
                 Divider()
@@ -153,12 +145,15 @@ struct HomePage: View {
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
-    private func teamScoreRow(abbreviation: String, name: String, score: Int, isWinner: Bool) -> some View {
-        HStack {
-            Text(abbreviation)
+    private func teamScoreRow(team: Team, score: Int, isWinner: Bool) -> some View {
+        HStack(spacing: 8) {
+            teamBadge(team)
+                .frame(width: 28, height: 28)
+            Text(team.abbreviation)
                 .font(.system(.body, design: .rounded).weight(.bold))
-                .frame(width: 40, alignment: .leading)
-            Text(name)
+                .lineLimit(1)
+                .fixedSize()
+            Text(team.name)
                 .font(.subheadline)
                 .foregroundStyle(isWinner ? .primary : .secondary)
                 .lineLimit(1)
@@ -211,7 +206,9 @@ struct HomePage: View {
                 }
             }
 
-            HStack {
+            HStack(spacing: 8) {
+                teamBadge(match.homeTeam)
+                    .frame(width: 28, height: 28)
                 Text(match.homeTeam.abbreviation)
                     .font(.system(.body, design: .rounded).weight(.bold))
                 Text(match.homeTeam.name)
@@ -221,7 +218,9 @@ struct HomePage: View {
                 Spacer()
             }
 
-            HStack {
+            HStack(spacing: 8) {
+                teamBadge(match.awayTeam)
+                    .frame(width: 28, height: 28)
                 Text(match.awayTeam.abbreviation)
                     .font(.system(.body, design: .rounded).weight(.bold))
                 Text(match.awayTeam.name)
@@ -252,6 +251,38 @@ struct HomePage: View {
         }
         .padding()
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+    }
+
+    // MARK: - Team Badge
+
+    @ViewBuilder
+    private func teamBadge(_ team: Team) -> some View {
+        if let logoURL = team.logoURL {
+            AsyncImage(url: logoURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image.resizable().scaledToFit()
+                case .empty:
+                    badgePlaceholder(team.abbreviation)
+                case .failure:
+                    badgePlaceholder(team.abbreviation)
+                @unknown default:
+                    badgePlaceholder(team.abbreviation)
+                }
+            }
+        } else {
+            badgePlaceholder(team.abbreviation)
+        }
+    }
+
+    private func badgePlaceholder(_ abbreviation: String) -> some View {
+        Text(abbreviation)
+            .font(.system(size: 8, weight: .black))
+            .foregroundStyle(.green)
+            .lineLimit(1)
+            .fixedSize()
+            .frame(width: 28, height: 28)
+            .background(Color.green.opacity(0.12), in: Circle())
     }
 
     // MARK: - Helpers
